@@ -224,7 +224,10 @@ void MainWindow::on_expButton_clicked()
             eGuard = guard;
             out<< "             if(" << guard << ")\n";
             out<< "             {\n";
-            out<< "                    " << action << "\n";
+
+            if(action != "None")
+                out<< "                    " << action << "\n";
+
             if(eState == "enter" || eState == "exit" || eState == nstate)
             {
                 out<< "                     return HANDLE;\n";
@@ -241,7 +244,9 @@ void MainWindow::on_expButton_clicked()
         }
         else
         {
-            out<< "                    " << action << "\n";
+            if(action != "None")
+                out<< "                    " << action << "\n";
+
             if(eState == "enter" || eState == "exit" || eState == nstate)
             {
                 out<< "                     return HANDLE;\n";
@@ -266,7 +271,10 @@ void MainWindow::on_expButton_clicked()
             eGuard = guard;
             out<< "             if(" << guard << ")\n";
             out<< "             {\n";
-            out<< "                    " << action << "\n";
+
+            if(action != "None")
+                out<< "                    " << action << "\n";
+
             if(eState == "enter" || eState == "exit" || eState == nstate)
             {
                 out<< "                     return HANDLE;\n";
@@ -283,7 +291,9 @@ void MainWindow::on_expButton_clicked()
         }
         else
         {
-            out<< "                    " << action << "\n";
+            if(action != "None")
+                out<< "                    " << action << "\n";
+
             if(eState == "enter" || eState == "exit" || eState == nstate)
             {
                 out<< "                     return HANDLE;\n";
@@ -298,31 +308,34 @@ void MainWindow::on_expButton_clicked()
 
         }
     }
-    else if(eGuard != guard && guard != "None")
+    else if( guard != "None")
     {
         out<< "             else if(" << guard << ")\n";
         out<< "             {\n";
-        out<< "                    " << action << "\n";
+
+        if(action != "None")
+            out<< "                    " << action << "\n";
+
         if(eState == "enter" || eState == "exit" || eState == nstate)
         {
             out<< "                     return HANDLE;\n";
-            out<< "                     break;";
+            out<< "                     break;\n";
         }
         else
         {
             out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-            out<< "                     return TRAN;";
-            out<< "                     break;";
+            out<< "                     return TRAN;\n";
+            out<< "                     break;\n";
         }
         out<< "             }\n";
     }
-    else if(eGuard == "None")
+    else if(guard == "None")
     {
         out<< "                    " << action << "\n";
         if(eState == "enter" || eState == "exit" || eState == nstate)
         {
             out<< "                     return HANDLE;\n";
-            out<< "                     break;";
+            out<< "                     break;\n";
         }
         else
         {
