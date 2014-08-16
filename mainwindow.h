@@ -10,10 +10,8 @@
 #include <QDir>
 #include <QTreeWidget>
 #include <QTextStream>
-#include <stdio.h>
 #include <QFileDialog>
 
-#include "treemodel.h"
 
 namespace Ui {
 class MainWindow;
@@ -44,10 +42,6 @@ private:
     QString eState;
     QString eEvent;
     QString eGuard;
-
-    TreeModel *stateTree;
-    TreeItem *root;
-    TreeItem *child;
 
 private slots:
     void on_addButton_clicked();

@@ -333,5 +333,19 @@ void MainWindow::on_expButton_clicked()
 
     }
 
+    if(i == ui->tableWidget_2->rowCount()-2)
+    {
+        out << "    }\n";
+        out << "}\n";
+    }
+    else
+    {
+        if(eState != ui->tableWidget_2->item(i+1, 0)->text())
+        {
+            out << "    }\n";
+            out << "}\n";
+        }
+    }
+
     }
 }

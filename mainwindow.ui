@@ -30,7 +30,7 @@
    <widget class="QTableWidget" name="tableWidget_2">
     <property name="geometry">
      <rect>
-      <x>2</x>
+      <x>185</x>
       <y>0</y>
       <width>1002</width>
       <height>621</height>
@@ -294,10 +294,10 @@
    <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>10</y>
+      <x>5</x>
+      <y>0</y>
       <width>171</width>
-      <height>611</height>
+      <height>621</height>
      </rect>
     </property>
     <property name="autoExpandDelay">
