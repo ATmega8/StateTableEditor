@@ -154,143 +154,6 @@
     <column/>
     <column/>
    </widget>
-   <widget class="QToolBox" name="toolBox">
-    <property name="geometry">
-     <rect>
-      <x>1194</x>
-      <y>80</y>
-      <width>75</width>
-      <height>379</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>2</number>
-    </property>
-    <widget class="QWidget" name="guard">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>75</width>
-       <height>255</height>
-      </rect>
-     </property>
-     <attribute name="label">
-      <string>Guard</string>
-     </attribute>
-     <widget class="QTreeWidget" name="gTree">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>75</width>
-        <height>259</height>
-       </rect>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="action">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>75</width>
-       <height>255</height>
-      </rect>
-     </property>
-     <attribute name="label">
-      <string>Action</string>
-     </attribute>
-     <widget class="QTreeWidget" name="aTree">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>75</width>
-        <height>259</height>
-       </rect>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="state">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>75</width>
-       <height>255</height>
-      </rect>
-     </property>
-     <attribute name="label">
-      <string>State</string>
-     </attribute>
-     <widget class="QTreeWidget" name="sTree">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>75</width>
-        <height>259</height>
-       </rect>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="event">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>75</width>
-       <height>255</height>
-      </rect>
-     </property>
-     <attribute name="label">
-      <string>Event</string>
-     </attribute>
-     <widget class="QTreeWidget" name="eTree">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>75</width>
-        <height>259</height>
-       </rect>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
@@ -313,13 +176,26 @@
      <number>1</number>
     </property>
     <attribute name="headerVisible">
-     <bool>true</bool>
+     <bool>false</bool>
     </attribute>
     <column>
      <property name="text">
       <string notr="true">1</string>
      </property>
     </column>
+   </widget>
+   <widget class="QPushButton" name="setButton">
+    <property name="geometry">
+     <rect>
+      <x>1216</x>
+      <y>40</y>
+      <width>60</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Setting</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

@@ -12,6 +12,7 @@
 #include <QTextStream>
 #include <QFileDialog>
 
+#include "settingdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,8 @@ private:
     QString eEvent;
     QString eGuard;
 
+    SettingDialog *setting;
+
 private slots:
     void on_addButton_clicked();
     void on_stateButton_clicked();
@@ -52,6 +55,7 @@ private slots:
     void on_actButton_clicked();
     void on_grdButton_clicked();
     void on_expButton_clicked();
+    void on_setButton_clicked();
 };
 
 /*class ItemBoxDelegate : public QStyledItemDelegate

@@ -29,19 +29,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QComboBox *aComboBox = (QComboBox*)ui->tableWidget->cellWidget(0, 4);
     aComboBox->addItem(tr("None"), aComboBox->count());
 
-    QTreeWidgetItem *enterTreeItem = new QTreeWidgetItem(ui->eTree);
-    enterTreeItem->setText(0, tr("enter"));
-
-    QTreeWidgetItem *exitTreeItem = new QTreeWidgetItem(ui->eTree);
-    exitTreeItem->setText(0, tr("exit"));
-
     cState = " ";
     cEvent = " ";
+
+    setting = new SettingDialog;
+    setting->setWindowTitle("State Machine and Event Setting");
+    this->setWindowTitle("State Table Editor");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete setting;
 }
 
 void MainWindow::on_addButton_clicked()
@@ -121,9 +120,6 @@ void MainWindow::on_stateButton_clicked()
                                          "", &ok);
      if (ok && !text.isEmpty())
      {
-        QTreeWidgetItem *newTreeItem = new QTreeWidgetItem(ui->sTree);
-        newTreeItem->setText(0, text);
-
         sComboBox->addItem(text, sComboBox->count());
         nComboBox->addItem(text, nComboBox->count());
      }
@@ -138,12 +134,7 @@ void MainWindow::on_sigButton_clicked()
                                          tr("Event:"), QLineEdit::Normal,
                                          "", &ok);
      if (ok && !text.isEmpty())
-     {
-        QTreeWidgetItem *newTreeItem = new QTreeWidgetItem(ui->eTree);
-        newTreeItem->setText(0, text);
-
         eComboBox->addItem(text, eComboBox->count());
-     }
 }
 
 void MainWindow::on_actButton_clicked()
@@ -155,12 +146,7 @@ void MainWindow::on_actButton_clicked()
                                          tr("Action:"), QLineEdit::Normal,
                                          "", &ok);
      if (ok && !text.isEmpty())
-     {
-        QTreeWidgetItem *newTreeItem = new QTreeWidgetItem(ui->aTree);
-        newTreeItem->setText(0, text);
-
         aComboBox->addItem(text, aComboBox->count());
-     }
 }
 
 void MainWindow::on_grdButton_clicked()
@@ -172,12 +158,7 @@ void MainWindow::on_grdButton_clicked()
                                          tr("Gruad:"), QLineEdit::Normal,
                                          "", &ok);
      if (ok && !text.isEmpty())
-     {
-        QTreeWidgetItem *newTreeItem = new QTreeWidgetItem(ui->gTree);
-        newTreeItem->setText(0, text);
-
         gComboBox->addItem(text, gComboBox->count());
-     }
 }
 
 void MainWindow::on_expButton_clicked()
@@ -361,4 +342,9 @@ void MainWindow::on_expButton_clicked()
     }
 
     }
+}
+
+void MainWindow::on_setButton_clicked()
+{
+   setting->show();
 }
