@@ -333,6 +333,5 @@ void MainWindow::on_expButton_clicked()
 
     }
 
-    out <<"}\n";
     }
 }
