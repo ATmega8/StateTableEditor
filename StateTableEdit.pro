@@ -21,3 +21,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     settingdialog.ui
+
+OTHER_FILES += \
+    README.md

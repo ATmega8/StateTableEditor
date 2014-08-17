@@ -27,12 +27,16 @@ public:
     ~MainWindow();
     Ui::MainWindow *ui;
 
+
 private:
     QTableWidgetItem *newItem;
 
     QTreeWidgetItem *cStateItem;
     QTreeWidgetItem *cEventItem;
     QTreeWidgetItem *cGuardItem;
+
+    QTreeWidgetItem *eventItem;
+    QTreeWidgetItem *stateItem;
 
     QComboBox *newComboBox;
 
@@ -49,8 +53,6 @@ private:
 private slots:
     void on_addButton_clicked();
     void on_stateButton_clicked();
-    //void on_sComboBoxactivated(QString);
-
     void on_sigButton_clicked();
     void on_actButton_clicked();
     void on_grdButton_clicked();
@@ -58,22 +60,6 @@ private slots:
     void on_setButton_clicked();
 };
 
-/*class ItemBoxDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
 
-public:
-    ItemBoxDelegate(QObject *parent = 0);
-
-    QWidget *createEditor(QWidget *parent,
-                          const QStyleOptionViewItem &option,
-                          const QModelIndex &index) const;
-    void setEditorData(QWidget *editor, const QModelIndex &index) const;
-    void setModelData(QWidget *editor, QAbstractItemModel *model,
-                     const QModelIndex &index) const;
-    void updateEditorGeometry(QWidget *editor,
-                              const QStyleOptionViewItem &option,
-                              const QModelIndex &index) const;
-};*/
 
 #endif // MAINWINDOW_H

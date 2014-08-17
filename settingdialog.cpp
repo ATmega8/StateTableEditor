@@ -1,5 +1,6 @@
 #include "settingdialog.h"
 #include "ui_settingdialog.h"
+#include "mainwindow.h"
 
 SettingDialog::SettingDialog(QWidget *parent) :
     QWidget(parent),
@@ -8,7 +9,6 @@ SettingDialog::SettingDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->comboBox->addItem("FSM");
     ui->comboBox->addItem("HSM");
-
 }
 
 SettingDialog::~SettingDialog()
@@ -80,4 +80,41 @@ void SettingDialog::on_eeditButton_clicked()
 void SettingDialog::on_edelButton_clicked()
 {
      ui->elistWidget->takeItem(ui->elistWidget->currentRow());
+}
+
+QString SettingDialog::getSateName()
+{
+    return ui->lineEdit->text();
+}
+
+QString SettingDialog::getEventName()
+{
+    return ui->lineEdit_2->text();
+}
+
+QString SettingDialog::getStateType()
+{
+    return ui->comboBox->currentText();
+}
+
+QList<QString> SettingDialog::getStateValue()
+{
+    QList<QString> value;
+    int i;
+
+    for(i = 0; i < ui->listWidget->count(); i++)
+       value[i] = ui->listWidget->item(i)->text();
+
+   return value;
+}
+
+QList<QString> SettingDialog::getEventValue()
+{
+    QList<QString> value;
+    int i;
+
+    for(i = 0; i < ui->elistWidget->count(); i++)
+       value[i] = ui->elistWidget->item(i)->text();
+
+   return value;
 }

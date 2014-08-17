@@ -164,18 +164,28 @@ void MainWindow::on_grdButton_clicked()
 void MainWindow::on_expButton_clicked()
 {
     int i;
-    QString str ,event, guard, nstate, action;
-    /*QUrl files = QFileDialog::getSaveFileName(
+    QString str ,event, guard, nstate, action, cPath, hPath;
+    QUrl files = QFileDialog::getExistingDirectoryUrl(
                             this,
                             "Select one or more files to open",
-                            QDir().currentPath(),
-                            "C Source File (*.c)");*/
+                            QDir().currentPath());
 
-    QFile file("/home/life/Code/C/QtTest.c");
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    cPath = files.path().append("/");
+    cPath.append(setting->getSateName().append(".c"));
+
+    hPath = files.path().append("/");
+    hPath.append(setting->getSateName().append(".h"));
+
+    QFile cfile(cPath);
+    if (!cfile.open(QIODevice::WriteOnly | QIODevice::Text))
             return;
 
-    QTextStream out(&file);
+    QFile hfile(hPath);
+    if (!hfile.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+
+    /*Buid C Source File*/
+    QTextStream out(&cfile);
     out << "/*This File Create By StateTableEdit Alpha*/\n";
 
     for(i = 0; i < ui->tableWidget_2->rowCount()-1; i++)
@@ -347,4 +357,5 @@ void MainWindow::on_expButton_clicked()
 void MainWindow::on_setButton_clicked()
 {
    setting->show();
+
 }
