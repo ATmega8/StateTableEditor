@@ -13,6 +13,7 @@
 #include <QFileDialog>
 
 #include "settingdialog.h"
+#include "statetable.h"
 
 namespace Ui {
 class MainWindow;
@@ -50,6 +51,8 @@ private:
 
     SettingDialog *setting;
 
+    StateTable *table;
+
 private slots:
     void on_addButton_clicked();
     void on_stateButton_clicked();
@@ -58,6 +61,10 @@ private slots:
     void on_grdButton_clicked();
     void on_expButton_clicked();
     void on_setButton_clicked();
+
+public slots:
+    void on_setting_closed();
+
 };
 
 

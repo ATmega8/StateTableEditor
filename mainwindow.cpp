@@ -7,11 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QStringList HeaderLabels;
-    HeaderLabels << "Current State" << "Event" << "Guard Conditions" << "Next State" << "Action";
+    table = new StateTable;
+
+    ui->tableView_2->setModel(table);
 
     ui->treeWidget->setHeaderLabel(QString("State Tree"));
-    ui->tableWidget_2->setHorizontalHeaderLabels(HeaderLabels);
 
     ui->tableWidget->setCellWidget(0,0, new QComboBox);
     ui->tableWidget->setCellWidget(0,1, new QComboBox);
@@ -34,7 +34,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setting = new SettingDialog;
     setting->setWindowTitle("State Machine and Event Setting");
-    this->setWindowTitle("State Table Editor");
+    this->setWindowTitle("状态表编辑器");
+
+    connect(setting, SIGNAL(closedSignal()), this, SLOT(on_setting_closed()));
+
 }
 
 MainWindow::~MainWindow()
@@ -47,7 +50,6 @@ void MainWindow::on_addButton_clicked()
 {
     int i, row;
     QString str, event, guard;
-    row = ui->tableWidget_2->rowCount();
 
     for(i = 0; i < 5; i++)
     {
@@ -57,7 +59,6 @@ void MainWindow::on_addButton_clicked()
         if( !str.isEmpty() )
         {
             QTableWidgetItem *newItem  = new QTableWidgetItem(str);
-            ui->tableWidget_2->setItem(row -1, i, newItem);
         }
     }
 
@@ -74,7 +75,7 @@ void MainWindow::on_addButton_clicked()
     {
         cState = str;
         cEvent = event;
-        cStateItem = new QTreeWidgetItem(ui->treeWidget);
+        cStateItem = new QTreeWidgetItem(stateItem);
         cEventItem = new QTreeWidgetItem(cStateItem);
         cStateItem->setText(0, str);
         cEventItem->setText(0, event);
@@ -105,7 +106,6 @@ void MainWindow::on_addButton_clicked()
         cGuardItem->setText(0, guard);
     }
 
-    ui->tableWidget_2->setRowCount(row + 1);
 }
 
 void MainWindow::on_stateButton_clicked()
@@ -188,174 +188,182 @@ void MainWindow::on_expButton_clicked()
     QTextStream out(&cfile);
     out << "/*This File Create By StateTableEdit Alpha*/\n";
 
-    for(i = 0; i < ui->tableWidget_2->rowCount()-1; i++)
-    {
-        str= ui->tableWidget_2->item(i, 0)->text();
-        event= ui->tableWidget_2->item(i, 1)->text();
-        guard= ui->tableWidget_2->item(i, 2)->text();
-        nstate= ui->tableWidget_2->item(i, 3)->text();
-        action= ui->tableWidget_2->item(i, 4)->text();
+//    for(i = 0; i < ui->tableWidget_2->rowCount()-1; i++)
+//    {
+//        str= ui->tableWidget_2->item(i, 0)->text();
+//        event= ui->tableWidget_2->item(i, 1)->text();
+//        guard= ui->tableWidget_2->item(i, 2)->text();
+//        nstate= ui->tableWidget_2->item(i, 3)->text();
+//        action= ui->tableWidget_2->item(i, 4)->text();
 
-        out << "\n";
+//        out << "\n";
 
-    if(eState != str)
-    {
-        eState = str;
-        eEvent = event;
+//    if(eState != str)
+//    {
+//        eState = str;
+//        eEvent = event;
 
-        /*function head*/
-        out << "stateTypeDef " << eState << "(userStateTypeDef *me, userSignalTypeDef *evt)\n";
-        out << "{\n";
-        out << "    switch(evt)\n";
-        out << "    {\n";
-        out << "        case " << event << ":\n";
+//        /*function head*/
+//        out << "stateTypeDef " << eState << "(userStateTypeDef *me, userSignalTypeDef *evt)\n";
+//        out << "{\n";
+//        out << "    switch(evt)\n";
+//        out << "    {\n";
+//        out << "        case " << event << ":\n";
 
-        if(guard != "None")
-        {
-            eGuard = guard;
-            out<< "             if(" << guard << ")\n";
-            out<< "             {\n";
+//        if(guard != "None")
+//        {
+//            eGuard = guard;
+//            out<< "             if(" << guard << ")\n";
+//            out<< "             {\n";
 
-            if(action != "None")
-                out<< "                    " << action << "\n";
+//            if(action != "None")
+//                out<< "                    " << action << "\n";
 
-            if(eState == "enter" || eState == "exit" || eState == nstate)
-            {
-                out<< "                     return HANDLE;\n";
-                out<< "                     break;\n";
-            }
-            else
-            {
-                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-                out<< "                     return TRAN;\n";
-                out<< "                     break;\n";
-            }
-            out<< "             }\n";
+//            if(eState == "enter" || eState == "exit" || eState == nstate)
+//            {
+//                out<< "                     return HANDLE;\n";
+//                out<< "                     break;\n";
+//            }
+//            else
+//            {
+//                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
+//                out<< "                     return TRAN;\n";
+//                out<< "                     break;\n";
+//            }
+//            out<< "             }\n";
 
-        }
-        else
-        {
-            if(action != "None")
-                out<< "                    " << action << "\n";
+//        }
+//        else
+//        {
+//            if(action != "None")
+//                out<< "                    " << action << "\n";
 
-            if(eState == "enter" || eState == "exit" || eState == nstate)
-            {
-                out<< "                     return HANDLE;\n";
-                out<< "                     break;";
-            }
-            else
-            {
-                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-                out<< "                     return TRAN;\n";
-                out<< "                     break;\n";
-            }
+//            if(eState == "enter" || eState == "exit" || eState == nstate)
+//            {
+//                out<< "                     return HANDLE;\n";
+//                out<< "                     break;";
+//            }
+//            else
+//            {
+//                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
+//                out<< "                     return TRAN;\n";
+//                out<< "                     break;\n";
+//            }
 
-        }
-    }
-    else if(eEvent != event)
-    {
-        eEvent = event;
-        out << "        case " << event << ":\n";
+//        }
+//    }
+//    else if(eEvent != event)
+//    {
+//        eEvent = event;
+//        out << "        case " << event << ":\n";
 
-        if(guard != "None")
-        {
-            eGuard = guard;
-            out<< "             if(" << guard << ")\n";
-            out<< "             {\n";
+//        if(guard != "None")
+//        {
+//            eGuard = guard;
+//            out<< "             if(" << guard << ")\n";
+//            out<< "             {\n";
 
-            if(action != "None")
-                out<< "                    " << action << "\n";
+//            if(action != "None")
+//                out<< "                    " << action << "\n";
 
-            if(eState == "enter" || eState == "exit" || eState == nstate)
-            {
-                out<< "                     return HANDLE;\n";
-                out<< "                     break;\n";
-            }
-            else
-            {
-                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-                out<< "                     return TRAN;\n";
-                out<< "                     break;\n";
-            }
-            out<< "             }\n";
+//            if(eState == "enter" || eState == "exit" || eState == nstate)
+//            {
+//                out<< "                     return HANDLE;\n";
+//                out<< "                     break;\n";
+//            }
+//            else
+//            {
+//                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
+//                out<< "                     return TRAN;\n";
+//                out<< "                     break;\n";
+//            }
+//            out<< "             }\n";
 
-        }
-        else
-        {
-            if(action != "None")
-                out<< "                    " << action << "\n";
+//        }
+//        else
+//        {
+//            if(action != "None")
+//                out<< "                    " << action << "\n";
 
-            if(eState == "enter" || eState == "exit" || eState == nstate)
-            {
-                out<< "                     return HANDLE;\n";
-                out<< "                     break;\n";
-            }
-            else
-            {
-                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-                out<< "                     return TRAN;\n";
-                out<< "                     break;\n";
-            }
+//            if(eState == "enter" || eState == "exit" || eState == nstate)
+//            {
+//                out<< "                     return HANDLE;\n";
+//                out<< "                     break;\n";
+//            }
+//            else
+//            {
+//                out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
+//                out<< "                     return TRAN;\n";
+//                out<< "                     break;\n";
+//            }
 
-        }
-    }
-    else if( guard != "None")
-    {
-        out<< "             else if(" << guard << ")\n";
-        out<< "             {\n";
+//        }
+//    }
+//    else if( guard != "None")
+//    {
+//        out<< "             else if(" << guard << ")\n";
+//        out<< "             {\n";
 
-        if(action != "None")
-            out<< "                    " << action << "\n";
+//        if(action != "None")
+//            out<< "                    " << action << "\n";
 
-        if(eState == "enter" || eState == "exit" || eState == nstate)
-        {
-            out<< "                     return HANDLE;\n";
-            out<< "                     break;\n";
-        }
-        else
-        {
-            out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-            out<< "                     return TRAN;\n";
-            out<< "                     break;\n";
-        }
-        out<< "             }\n";
-    }
-    else if(guard == "None")
-    {
-        out<< "                    " << action << "\n";
-        if(eState == "enter" || eState == "exit" || eState == nstate)
-        {
-            out<< "                     return HANDLE;\n";
-            out<< "                     break;\n";
-        }
-        else
-        {
-            out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
-            out<< "                     return TRAN;";
-            out<< "                     break;";
-        }
+//        if(eState == "enter" || eState == "exit" || eState == nstate)
+//        {
+//            out<< "                     return HANDLE;\n";
+//            out<< "                     break;\n";
+//        }
+//        else
+//        {
+//            out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
+//            out<< "                     return TRAN;\n";
+//            out<< "                     break;\n";
+//        }
+//        out<< "             }\n";
+//    }
+//    else if(guard == "None")
+//    {
+//        out<< "                    " << action << "\n";
+//        if(eState == "enter" || eState == "exit" || eState == nstate)
+//        {
+//            out<< "                     return HANDLE;\n";
+//            out<< "                     break;\n";
+//        }
+//        else
+//        {
+//            out<< "                     me->super.currentState = STATE(" << nstate <<");\n";
+//            out<< "                     return TRAN;";
+//            out<< "                     break;";
+//        }
 
-    }
+//    }
 
-    if(i == ui->tableWidget_2->rowCount()-2)
-    {
-        out << "    }\n";
-        out << "}\n";
-    }
-    else
-    {
-        if(eState != ui->tableWidget_2->item(i+1, 0)->text())
-        {
-            out << "    }\n";
-            out << "}\n";
-        }
-    }
+//    if(i == ui->tableWidget_2->rowCount()-2)
+//    {
+//        out << "    }\n";
+//        out << "}\n";
+//    }
+//    else
+//    {
+//        if(eState != ui->tableWidget_2->item(i+1, 0)->text())
+//        {
+//            out << "    }\n";
+//            out << "}\n";
+//        }
+//    }
 
-    }
+//    }
 }
 
 void MainWindow::on_setButton_clicked()
 {
    setting->show();
+}
+
+void MainWindow::on_setting_closed()
+{
+    stateItem = new QTreeWidgetItem(ui->treeWidget);
+    eventItem= new QTreeWidgetItem(ui->treeWidget);
+    stateItem->setText(0, setting->getSateName());
+    eventItem->setText(0, setting->getEventName());
 
 }

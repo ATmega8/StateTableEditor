@@ -118,3 +118,9 @@ QList<QString> SettingDialog::getEventValue()
 
    return value;
 }
+
+void SettingDialog::closeEvent(QCloseEvent *event)
+{
+    emit closedSignal();
+    event->accept();
+}

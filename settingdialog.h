@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QString>
 #include <QList>
+#include <QCloseEvent>
 
 namespace Ui {
 class SettingDialog;
@@ -35,6 +36,11 @@ private slots:
 private:
     Ui::SettingDialog *ui;
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
+signals:
+    void closedSignal();
 
 };
 

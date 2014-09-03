@@ -14,10 +14,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    settingdialog.cpp
+    settingdialog.cpp \
+    parser.cpp \
+    parsertreeitem.cpp \
+    statetable.cpp \
+    tableitem.cpp
 
 HEADERS  += mainwindow.h \
-    settingdialog.h
+    settingdialog.h \
+    parser.h \
+    parsertreeitem.h \
+    statetable.h \
+    tableitem.h
 
 FORMS    += mainwindow.ui \
     settingdialog.ui
