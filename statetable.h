@@ -30,7 +30,9 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
-    QModelIndex parent(const QModelIndex &child) const;
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role);
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role);
 
     void setRow(int row);
     void setColumn(int column);
