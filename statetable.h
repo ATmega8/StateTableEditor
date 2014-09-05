@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QVariant>
 #include <QModelIndex>
+#include <QStringList>
 
 #include "tableitem.h"
 
@@ -32,10 +33,11 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role);
-    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role);
+    bool setHeaderData(QStringList string);
 
-    void setRow(int row);
-    void setColumn(int column);
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+
+    void setTableSize(int row, int column);
 
 signals:
 
@@ -46,6 +48,7 @@ private:
     int tableRow;
     int tableColumn;
 
+    TableItem* createHeadLine(QStringList headString);
 };
 
 #endif // STATETABLE_H

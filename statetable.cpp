@@ -4,25 +4,6 @@ StateTable::StateTable(QObject *parent) :
     QAbstractTableModel(parent)
 {
     rootItem = new TableItem("root");
-
-    TableItem *parentItem1 = new TableItem("state", rootItem);
-    TableItem *parentItem2 = new TableItem("event", rootItem);
-    rootItem->append(parentItem1);
-    rootItem->append(parentItem2);
-
-    TableItem *childItem11 = new TableItem("state1", parentItem1);
-    TableItem *childItem12 = new TableItem("state2", parentItem1);
-    parentItem1->append(childItem11);
-    parentItem1->append(childItem12);
-
-    TableItem *childItem21 = new TableItem("event1", parentItem2);
-    TableItem *childItem22 = new TableItem("event2", parentItem2);
-    parentItem2->append(childItem21);
-    parentItem2->append(childItem22);
-
-    setColumn(2);
-    setRow(2);
-
 }
 
 StateTable::~StateTable()
@@ -40,8 +21,7 @@ QVariant StateTable::headerData(int section, Qt::Orientation orientation, int ro
     return parentItem->data();
 }
 
-QVariant StateTable::data(const QModelIndex &index, int role) const
-{
+QVariant StateTable::data(const QModelIndex &index, int role) const {
     if(!index.isValid())
         return QVariant();
 
@@ -80,22 +60,49 @@ QModelIndex StateTable::index(int row, int column, const QModelIndex &parent) co
         return QModelIndex();
 }
 
-void StateTable::setColumn(int column)
-{
-    tableColumn = column;
-}
-
-void StateTable::setRow(int row)
-{
-    tableRow = row;
-}
-
 bool StateTable::setData(const QModelIndex &index, const QVariant &value, int role)
 {
 
 }
 
-bool StateTable::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+bool StateTable::setHeaderData(QStringList string)
 {
+   int i;
 
+   if(string.length() != tableColumn)
+       return false;
+
+   for(i = 0; i < tableColumn; i++)
+   {
+       TableItem *parentItem = rootItem->child(i);
+       parentItem->setData(string.at(i));
+   }
+}
+
+Qt::ItemFlags StateTable::flags(const QModelIndex &index) const
+{
+    if(!index.isValid())
+        return 0;
+
+    return Qt::ItemIsEnabled;
+}
+
+void StateTable::setTableSize(int row, int column)
+{
+    int i, j;
+
+    tableColumn = column;
+    tableRow = row;
+
+    for(i = 0; i < tableColumn; i++)
+    {
+        TableItem *parentItem = new TableItem("", rootItem);
+        rootItem->append(parentItem);
+
+        for(j = 0; j < tableRow; j++)
+        {
+            TableItem *childItem = new TableItem("", rootItem);
+            parentItem->append(childItem);
+        }
+    }
 }

@@ -8,6 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     table = new StateTable;
+    table->setTableSize(2, 5);
+
+    QStringList headString;
+    headString << "当前状态" << "信号" << "条件" << "下个状态" << "动作" ;
+
+    table->setHeaderData(headString);
 
     ui->tableView_2->setModel(table);
 

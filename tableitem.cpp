@@ -40,3 +40,8 @@ int TableItem::row() const
 {
     return parentItem->childCount();
 }
+
+void TableItem::setData(QString string)
+{
+   this->itemData = string;
+}

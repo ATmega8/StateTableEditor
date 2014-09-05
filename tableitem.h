@@ -24,6 +24,7 @@ public:
     TableItem *child(int row) const;
 
     void append(TableItem* child);
+    void setData(QString string);
 
 private:
     TableItem *parentItem;
